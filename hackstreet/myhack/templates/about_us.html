@@ -93,8 +93,6 @@
       background: #e0e0e0;
       transition: background 0.4s;
       border-bottom: 2px solid #ccc;
-      position: sticky;
-     top : 0;
     }
 
     .dark .navbar {
@@ -135,69 +133,12 @@
     .logo.float-in {
       animation: floatIn 1.0s ease;
     }
-    .element{
-      font-size: 24px;
-      font-family: 'Orbitron', sans-serif;
-      color: black;
-      font-weight: 10px;
-      text-shadow: 0px 0px 10px cyan;
-    }
-    .dark.element:hover {
-      text-shadow: 0px 0px 20px cyan, 0px 0px 40px cyan;
-      transform: scale(1.1);
-    }
-    .dark.element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background: cyan;
-      transition: width 0.3s ease, left 0.3s ease;
-  }
-  
-  .dark.element:hover::after {
-      width: 100%;
-      left: 0;
-  }
-  
-    .dark .element{
-      color: cyan;
-      text-shadow: 0 0 10px cyan;
-      animation: neon-glow 1.5s infinite alternate;
-      border: none;
-      outline: none;
-    }
-    .element:hover {
-      text-shadow: 0px 0px 20px yellow, 0px 0px 40px yellow;
-      transform: scale(1.1);
-    }
-    .element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background:yellow;
-      transition: width 0.3s ease, left 0.3s ease;
-  }
-  
-    .element:hover::after {
-      width: 100%;
-      left: 0;
-  }
-    .dark .element.float-in{
-      animation: floatIn 1.0s ease;
-    }
   </style>
 </head>
 <body class="light">
   <nav class="navbar">
     <p id="modes"></p>
     <div class="logo">Hackstreet Boys</div>
-    <a href="about_us/" class="element">About us</a>
     <div class="pos">
       <button id="themeToggle" class="toggle">
         <div class="rocket-wrapper">
