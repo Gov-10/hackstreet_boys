@@ -3,14 +3,18 @@
 <head>
   <title>Home page</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
     body.light {
       background: #fff;
       transition: background 0.4s;
+      color: #000;
     }
 
     body.dark {
       background: #0b0b2c;
       transition: background 0.4s;
+      color: cyan;
     }
 
     .toggle {
@@ -19,12 +23,18 @@
       background: #f0f0f0;
       border-radius: 50%;
       overflow: hidden;
-      transition: background 0.4s;
+      transition: background 0.4s, transform 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       border: none;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .toggle:hover {
+      transform: scale(1.25);
+      background: #ddd;
     }
 
     .rocket-wrapper {
@@ -43,6 +53,7 @@
       opacity: 0.7;
       z-index: 0;
     }
+
     .rocket {
       position: absolute;
       font-size: 32px;
@@ -51,48 +62,120 @@
     }
 
     .dark .rocket {
-      transform: translateY(-120px); /* Rocket lift-off */
+      transform: translateY(-120px);
     }
-    .dark .rocket-outline{
-        background: blue;
-    }
-    .dark .content{
-        color: cyan;
-    }
-    .dark #modes{
-        color: cyan;
-    }
-    .pos{
-        margin-left : 1300px;
-    }
-    .navbar{
 
+    .dark .rocket-outline {
+      background: blue;
+    }
+
+    .dark .content,
+    .dark #modes {
+      color: cyan;
+    }
+
+    #modes {
+      max-width: 70px;
+      margin: 0;
+      font-size: 14px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .pos {
+      margin-right: 100px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #e0e0e0;
+      transition: background 0.4s;
+      border-bottom: 2px solid #ccc;
+    }
+
+    .dark .navbar {
+      background: #131343;
+      border-bottom: 2px solid cyan;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-family: 'Orbitron', sans-serif;
+      color: #000;
+    }
+
+    @keyframes neon-glow {
+      0% { box-shadow: 0 0 10px cyan; }
+      100% { box-shadow: 0 0 30px cyan; }
+    }
+
+    .dark .logo {
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+      animation: neon-glow 1.5s infinite alternate;
+      border: none;
+      outline: none;
+    }
+
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo.float-in {
+      animation: floatIn 1.0s ease;
     }
   </style>
 </head>
 <body class="light">
-    <nav class="navbar">
-  <p id="modes"></p>
-  
-  <div class="pos">
-  <button id="themeToggle" class="toggle">
-    <div class="rocket-wrapper">
-      <div class="rocket-outline"></div>
-      <div class="rocket">🚀</div>
+  <nav class="navbar">
+    <p id="modes"></p>
+    <div class="logo">Hackstreet Boys</div>
+    <div class="pos">
+      <button id="themeToggle" class="toggle">
+        <div class="rocket-wrapper">
+          <div class="rocket-outline"></div>
+          <div class="rocket" id="rocket">🚀</div>
+        </div>
+      </button>
     </div>
-  </button>
-  <div>
   </nav>
+
   <script>
     const btn = document.getElementById("themeToggle");
+    const logo = document.querySelector(".logo");
+    const rocket = document.getElementById("rocket");
+
+    function triggerFloatIn() {
+      logo.classList.remove("float-in");
+      void logo.offsetWidth;
+      logo.classList.add("float-in");
+    }
+
+    // Toggle theme and float logo
     btn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
-      if (document.body.classList.contains("dark")) {
-        document.getElementById("modes").textContent = "dark mode";
-      } else {
-        document.getElementById("modes").textContent = "";
-      }
+
+      document.getElementById("modes").textContent =
+        document.body.classList.contains("dark") ? "dark mode" : "";
+
+      rocket.textContent = document.body.classList.contains("dark") ? "🌙" : "🚀";
+
+      triggerFloatIn();
+    });
+
+    
+    window.addEventListener("DOMContentLoaded", () => {
+      triggerFloatIn();
     });
   </script>
 </body>
