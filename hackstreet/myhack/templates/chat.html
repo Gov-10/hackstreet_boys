@@ -1,0 +1,28 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .chat-box { background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; }
+    .response { margin-top: 20px; background: #e0f7fa; padding: 15px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="chat-box">
+    <h2>Chat with Bot</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Send</button>
+    </form>
+
+    {% if response %}
+      <div class="response">
+        <strong>Bot says:</strong> {{ response }}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

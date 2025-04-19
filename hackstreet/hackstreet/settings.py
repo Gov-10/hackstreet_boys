@@ -51,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'hackstreet.urls'
+GEMINI_API_KEY = "AIzaSyBCSGtJCBWzMLxlWWuR2dfei0gv8lE75BM"
 
 TEMPLATES = [
     {
