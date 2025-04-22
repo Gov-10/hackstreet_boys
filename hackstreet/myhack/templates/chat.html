@@ -193,10 +193,17 @@
       animation: floatIn 1.0s ease;
     }
     .chat-box { 
-      background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; 
+      background: #fff; 
+      padding: 20px; 
+      border-radius: 8px; 
+      max-width: 500px; 
+     margin : auto;
+      border: 2px solid black;
     }
     .response {
-       margin-top: 20px; background: #e0f7fa; padding: 15px; border-radius: 5px; 
+       margin-top: 20px; background: #e0f7fa; 
+       padding: 15px; 
+       border-radius: 5px; 
       }
       .dark .chat-box{
         color: cyan;
@@ -267,7 +274,22 @@
       triggerFloatIn();
     });
 
+    function speakResponse(responseText) {
+      const speech = new SpeechSynthesisUtterance(responseText);
+      speech.lang = 'en-US'; // You can change this to a different language if required
+      speech.pitch = 1; // Adjust the pitch
+      speech.rate = 1; // Adjust the rate of speech
+      speech.volume = 1; // Adjust the volume (1 is maximum)
+      
+      // Speak the response
+      window.speechSynthesis.speak(speech);
+    }
     
+    // Add this to the part where the bot responds
+    if (response) {
+      // Speak the bot response
+      speakResponse(response);
+    }
     window.addEventListener("DOMContentLoaded", () => {
       triggerFloatIn();
     });
