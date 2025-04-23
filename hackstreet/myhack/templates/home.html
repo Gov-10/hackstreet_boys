@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
@@ -191,6 +192,42 @@
     .dark .element.float-in{
       animation: floatIn 1.0s ease;
     }
+    .chatbot-icon {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      cursor: pointer;
+      z-index: 1000;
+      text-align: center;
+
+    }
+    .robot {
+      width: 150px;
+      transition: transform 0.3s ease;
+      animation: wave-hand 2s infinite ease-in-out;
+      filter : drop-shadow(0 0 5px cyan) drop-shadow(0 0 10px cyan);
+    }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+    
+    /* Hand waving effect (simplified) */
+    @keyframes wave-hand {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(15deg); }
+      40% { transform: rotate(-10deg); }
+      60% { transform: rotate(15deg); }
+      80% { transform: rotate(-5deg); }
+    }
+    .chatbot-icon:hover .robot {
+      transform: scale(2.0);
+    }    
+
   </style>
 </head>
 <body class="light">
@@ -210,10 +247,15 @@
       </button>
     </div>
   </nav>
+ 
+  <div class="chatbot-icon">
+    <a href="http://127.0.0.1:8000/chat/"><img src="{% static 'robo.webp' %}" alt="Chatbot" class="robot" /></a>
+  </div>
 <script>
   const btn = document.getElementById("themeToggle");
 const logo = document.querySelector(".logo");
 const rocket = document.getElementById("rocket");
+
 
 function triggerFloatIn() {
   logo.classList.remove("float-in");
