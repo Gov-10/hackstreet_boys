@@ -1,47 +1,127 @@
-<!-- chat.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <title>Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body.light {
-      background: #fff;
-      transition: background 0.4s;
+      background: linear-gradient(120deg, #fefefe, #e3f2fd);
       color: #000;
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
     body.dark {
-      background: #0b0b2c;
-      transition: background 0.4s;
+      background: linear-gradient(135deg, #0f0f3a, #001220);
       color: cyan;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      border-bottom: 2px solid #ccc;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .dark .navbar {
+      background: rgba(0, 0, 40, 0.4);
+      border-bottom: 2px solid cyan;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-family: 'Orbitron', sans-serif;
+      color: #000;
+    }
+
+    .dark .logo {
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+      animation: neon-glow 1.5s infinite alternate;
+    }
+
+    @keyframes neon-glow {
+      0% { text-shadow: 0 0 10px cyan; }
+      100% { text-shadow: 0 0 30px cyan; }
+    }
+
+    .element {
+      font-size: 18px;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: 0.3s ease;
+      position: relative;
+      padding: 6px 10px;
+    }
+
+    .element:hover {
+      transform: scale(1.1);
+    }
+
+    .dark .element {
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+    }
+
+    .element::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      left: 50%;
+      bottom: -5px;
+      background: yellow;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .element:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .dark .element::after {
+      background: cyan;
     }
 
     .toggle {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       background: #f0f0f0;
       border-radius: 50%;
-      overflow: hidden;
-      transition: background 0.4s, transform 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       border: none;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
     }
 
     .toggle:hover {
       transform: scale(1.25);
-      background: #ddd;
     }
 
     .rocket-wrapper {
       position: relative;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
     }
 
     .rocket-outline {
@@ -57,7 +137,7 @@
 
     .rocket {
       position: absolute;
-      font-size: 32px;
+      font-size: 28px;
       z-index: 1;
       transition: transform 1s ease;
     }
@@ -70,171 +150,114 @@
       background: blue;
     }
 
-    .dark .content,
-    .dark #modes {
-      color: cyan;
+    .chat-box {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(14px);
+      border: 2px solid #ccc;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     }
 
-    #modes {
-      max-width: 70px;
-      margin: 0;
-      font-size: 14px;
+    .dark .chat-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid cyan;
+    }
+
+    button[type="submit"] {
       font-family: 'Orbitron', sans-serif;
+      background: #0f62fe;
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 15px rgba(15, 98, 254, 0.3);
+      margin-left: 150px;
     }
 
-    .pos {
-      margin-right: 100px;
+    button[type="submit"]:hover {
+      transform: scale(1.05);
+      background: #0043ce;
     }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: #e0e0e0;
-      transition: background 0.4s;
-      border-bottom: 2px solid #ccc;
-      position: sticky;
-     top : 0;
-    }
-
-    .dark .navbar {
-      background: #131343;
-      border-bottom: 2px solid cyan;
-    }
-
-    .logo {
-      font-size: 24px;
+    .user-message, .bot-message {
       font-family: 'Orbitron', sans-serif;
+      padding: 12px 18px;
+      border-radius: 20px;
+      margin: 10px 0;
+      position: relative;
+      max-width: 75%;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .user-message {
+      background: #e0f7fa;
+      align-self: flex-end;
+      color: #000;
+      border-bottom-right-radius: 0;
+    }
+
+    .bot-message {
+      background: #d1c4e9;
+      align-self: flex-start;
+      color: #000;
+      border-bottom-left-radius: 0;
+      width: 85%;
+    }
+
+    .dark .user-message {
+      background: cyan;
       color: #000;
     }
 
-    @keyframes neon-glow {
-      0% { box-shadow: 0 0 10px cyan; }
-      100% { box-shadow: 0 0 30px cyan; }
+    .dark .bot-message {
+      background: purple;
+      color: white;
     }
 
-    .dark .logo {
-      color: cyan;
-      text-shadow: 0 0 10px cyan;
-      animation: neon-glow 1.5s infinite alternate; 
-      border: none;
-      outline: none;
+    .conversation {
+      display: flex;
+      flex-direction: column;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 20px;
     }
 
-    @keyframes floatIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
+    @media screen and (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        padding: 10px 20px;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      .element {
+        margin: 10px 0;
       }
     }
 
-    .logo.float-in {
-      animation: floatIn 1.0s ease;
-    }
-    .element{
-      font-size: 24px;
-      font-family: 'Orbitron', sans-serif;
-      color: black;
-      font-weight: 10px;
-      text-shadow: 0px 0px 10px cyan;
-    }
-    .dark.element:hover {
-      text-shadow: 0px 0px 20px cyan, 0px 0px 40px cyan;
-      transform: scale(1.1);
-    }
-    .dark.element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background: cyan;
-      transition: width 0.3s ease, left 0.3s ease;
-  }
-  
-  .dark.element:hover::after {
-      width: 100%;
-      left: 0;
-  }
-  
-    .dark .element{
-      color: cyan;
-      text-shadow: 0 0 10px cyan;
-      animation: neon-glow 1.5s infinite alternate;
-      border: none;
-      outline: none;
-    }
-    .element:hover {
-      text-shadow: 0px 0px 20px yellow, 0px 0px 40px yellow;
-      transform: scale(1.1);
-    }
-    .element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background:yellow;
-      transition: width 0.3s ease, left 0.3s ease;
-  }
-  
-    .element:hover::after {
-      width: 100%;
-      left: 0;
-  }
-    .dark .element.float-in{
-      animation: floatIn 1.0s ease;
-    }
-    .chat-box { 
-      background: #fff; 
-      padding: 20px; 
-      border-radius: 8px; 
-      max-width: 500px; 
-     margin : auto;
-      border: 2px solid black;
-    }
-    .response {
-       margin-top: 20px; background: #e0f7fa; 
-       padding: 15px; 
-       border-radius: 5px; 
-      }
-      .dark .chat-box{
-        color: cyan;
-        background : black;
-        border : 2px solid cyan;
-      }
-      .dark .response{
-        color: yellow;
-        background: black;
-      }
   </style>
 </head>
+<body class="light">
+  <nav class="navbar">
+    <p id="modes"></p>
+    <div class="logo">Hackstreet Boys</div>
+    <a href="/" class="element">Home</a>
+    <a href="/about_us/" class="element">About us</a>
+    <a href="/chat/" class="element">Chatbot</a>
+    <div class="pos">
+      <button id="themeToggle" class="toggle">
+        <div class="rocket-wrapper">
+          <div class="rocket-outline"></div>
+          <div class="rocket" id="rocket">🚀</div>
+        </div>
+      </button>
+    </div>
+  </nav>
 
-  <body class="light">
-    <nav class="navbar">
-      <p id="modes"></p>
-      <div class="logo">Hackstreet Boys</div>
-      <a href="http://127.0.0.1:8000/" class="element">Home</a>
-      <a href="http://127.0.0.1:8000/about_us/" class="element">About us</a>
-      <a href="http://127.0.0.1:8000/chat/" class="element">Chatbot</a>
-  
-      <div class="pos">
-        <button id="themeToggle" class="toggle">
-          <div class="rocket-wrapper">
-            <div class="rocket-outline"></div>
-            <div class="rocket" id="rocket">🚀</div>
-          </div>
-        </button>
-      </div>
-    </nav>
-  
   <div class="chat-box">
     <h2>Chat with Bot</h2>
     <form method="POST">
@@ -244,14 +267,16 @@
     </form>
 
     {% if response %}
-      <div class="response">
-        <strong>Bot says:</strong> {{ response }}
+    <div class="conversation">
+      <div class="bot-message" id="botResponse">
+        <strong>Bot:</strong> {{ response }}
       </div>
+    </div>
     {% endif %}
   </div>
-</body>
-<script>
-  const btn = document.getElementById("themeToggle");
+
+  <script>
+    const btn = document.getElementById("themeToggle");
     const logo = document.querySelector(".logo");
     const rocket = document.getElementById("rocket");
 
@@ -261,7 +286,6 @@
       logo.classList.add("float-in");
     }
 
-    // Toggle theme and float logo
     btn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
@@ -276,22 +300,32 @@
 
     function speakResponse(responseText) {
       const speech = new SpeechSynthesisUtterance(responseText);
-      speech.lang = 'en-US'; // You can change this to a different language if required
-      speech.pitch = 1; // Adjust the pitch
-      speech.rate = 1; // Adjust the rate of speech
-      speech.volume = 1; // Adjust the volume (1 is maximum)
-      
-      // Speak the response
+      speech.lang = 'en-US';
+      speech.pitch = 1;
+      speech.rate = 1;
+      speech.volume = 0.89;
       window.speechSynthesis.speak(speech);
     }
-    
-    // Add this to the part where the bot responds
-    if (response) {
-      // Speak the bot response
-      speakResponse(response);
-    }
+
     window.addEventListener("DOMContentLoaded", () => {
       triggerFloatIn();
+
+      const responseText = document.getElementById("botResponse")?.innerText;
+      if (responseText) {
+        speakResponse(responseText);
+
+        // Typing animation (just visual)
+        const element = document.getElementById("botResponse");
+        const fullText = element.innerText;
+        let index = 0;
+        element.innerText = '';
+        const interval = setInterval(() => {
+          element.innerText += fullText.charAt(index);
+          index++;
+          if (index >= fullText.length) clearInterval(interval);
+        }, 20);
+      }
     });
-</script>
+  </script>
+</body>
 </html>
