@@ -227,19 +227,89 @@
     .chatbot-icon:hover .robot {
       transform: scale(2.0);
     }    
-
+    .img-container {
+      margin: 20px;
+      display: inline-block;
+    }
+    .govind_img{
+      width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px cyan;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+    }
+    .govind_img:hover{
+      box-shadow: 0 0 30px aqua, 0 0 50px lightblue;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .texty{
+      color: cyan;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 20px;
+    }
+    .modal-content {
+      margin: 10% auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .modal-content img.qr-img {
+      width: 200px;
+      margin-top: 10px;
+    }
+    
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      color: red;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .cont{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 400px;
+      height: 400px;
+      padding: 20px;
+      margin-top: 55px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(0, 255, 255, 0.5); /* Soft cyan border */
+      background: rgba(255, 255, 255, 0.05); /* Frosted glass effect */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2),
+                  0 0 40px rgba(0, 255, 255, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
   </style>
 </head>
 <body class="light">
   <nav class="navbar">
     <p id="modes"></p>
     <div class="logo">Hackstreet Boys</div>
-    <a href="http://127.0.0.1:8000/" class="element">Home</a>
-    <a href="about_us/" class="element">About us</a>
-    <a href="chat/" class="element">Chatbot</a>
-    <a href="projects/" class="element">Projects</a>
-    <a href="contact_us/" class="element">Contact us</a>
-
+    <a href="/" class="element">Home</a>
+    <a href="/about_us/" class="element">About us</a>
+    <a href="/chat/" class="element">Chatbot</a>
+    <a href="/projects/" class="element">Projects</a>
+    <a href = "/contact_us/" class="element">Contact us</a>
+    
     <div class="pos">
       <button id="themeToggle" class="toggle">
         <div class="rocket-wrapper">
@@ -249,9 +319,24 @@
       </button>
     </div>
   </nav>
- 
+  <div class ="cont">
+  <div class= "img-container">
+  <img src = "{%static 'govind_image.png'%}" alt="This is Govind" class = "govind_img" onclick="openPopup()"/>
+  <h3 class="texty">Govind S</h3>
+  <p class="texty">Click on photo to contact me</p>
+  </div>
+</div>
+
+  <div id="qrModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <h3>Scan to Email Me</h3>
+      <img src="{% static 'qr.png' %}" alt="QR Code" class="qr-img"><br>
+      <a href="mailto:govindsys1008@gmail.com">Or you can just click here</a>
+    </div>
+  </div>
   <div class="chatbot-icon">
-    <a href="http://127.0.0.1:8000/chat/"><img src="{% static 'robo.webp' %}" alt="Chatbot" class="robot" /></a>
+    <a href="/chat/"><img src="{% static 'robo.webp' %}" alt="Chatbot" class="robot" /></a>
   </div>
 <script>
   const btn = document.getElementById("themeToggle");
@@ -283,23 +368,18 @@ btn.addEventListener("click", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
   triggerFloatIn();
-  const isDarkMode = document.body.classList.contains("dark");
-  document.getElementById("spline-dark").style.display = isDarkMode ? "block" : "none";
-  document.getElementById("spline-light").style.display = isDarkMode ? "none" : "block";
 });
 </script>
  
+<script>
+  function openPopup() {
+    document.getElementById("qrModal").style.display = "block";
+  }
 
-<!-- Load Spline once globally -->
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
-
-<div id="spline-dark" style="width:100%; height:600px;">
-  <spline-viewer url="https://prod.spline.design/vnrxqTetb8iVAU8I/scene.splinecode"></spline-viewer>
-</div>
-
-<div id="spline-light" style="width:100%; height:600px; display: none;">
-  <spline-viewer url="https://prod.spline.design/GFEbHPBoPEG1Y8ie/scene.splinecode"></spline-viewer>
-</div>
+  function closePopup() {
+    document.getElementById("qrModal").style.display = "none";
+  }
+</script>
 
 </body>
 </html>

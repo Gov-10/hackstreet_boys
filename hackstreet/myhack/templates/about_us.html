@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>About us page</title>
+  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -195,9 +197,11 @@
   <nav class="navbar">
     <p id="modes"></p>
     <div class="logo">HackstreetBoys</div>
-    <a href="http://127.0.0.1:8000/" class="element">Home</a>
-    <a href="http://127.0.0.1:8000/about_us/" class="element">About us</a>
-    <a href="http://127.0.0.1:8000/chat/" class="element">Chatbot</a>
+    <a href="/" class="element">Home</a>
+    <a href="/about_us/" class="element">About us</a>
+    <a href="/chat/" class="element">Chatbot</a>
+    <a href = "/projects/" class="element">Projects</a>
+    <a href = "/contact_us/" class="element">Contact us</a>
     <div class="pos">
       <button id="themeToggle" class="toggle">
         <div class="rocket-wrapper">
@@ -207,7 +211,9 @@
       </button>
     </div>
   </nav>
-
+  <py-script>
+    
+    <py-script>
   <script>
     const btn = document.getElementById("themeToggle");
     const logo = document.querySelector(".logo");
@@ -219,7 +225,6 @@
       logo.classList.add("float-in");
     }
 
-    // Toggle theme and float logo
     btn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
