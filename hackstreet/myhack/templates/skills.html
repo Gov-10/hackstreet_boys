@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chatbot</title>
+  <title>Skills</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
@@ -260,22 +260,6 @@
       </button>
     </div>
   </nav>
-
-  <div class="chat-box">
-    <h2>Chat with Bot</h2>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Send</button>
-    </form>
-
-    {% if response %}
-    <div class="conversation">
-      <div class="bot-message" id="botResponse">
-        <strong></strong> {{ response }}
-      </div>
-    </div>
-    {% endif %}
   </div>
 
   <script>
@@ -300,35 +284,6 @@
 
       triggerFloatIn();
     });
-
-    function speakResponse(responseText) {
-      const speech = new SpeechSynthesisUtterance(responseText);
-      speech.lang = 'en-US';
-      speech.pitch = 1;
-      speech.rate = 1;
-      speech.volume = 0.89;
-      window.speechSynthesis.speak(speech);
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      triggerFloatIn();
-
-      const responseText = document.getElementById("botResponse")?.innerText;
-      if (responseText) {
-        speakResponse(responseText);
-
-        // Typing animation (just visual)
-        const element = document.getElementById("botResponse");
-        const fullText = element.innerText;
-        let index = 0;
-        element.innerText = '';
-        const interval = setInterval(() => {
-          element.innerText += fullText.charAt(index);
-          index++;
-          if (index >= fullText.length) clearInterval(interval);
-        }, 20);
-      }
-    });
-  </script>
+</script>
 </body>
 </html>

@@ -85,23 +85,28 @@
     .pos {
       margin-right: 100px;
     }
-
     .navbar {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       padding: 20px 40px;
-      background: #e0e0e0;
-      transition: background 0.4s;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       border-bottom: 2px solid #ccc;
       position: sticky;
-     top : 0;
+      top: 0;
+      z-index: 999;
     }
 
     .dark .navbar {
-      background: #131343;
+      background: rgba(0, 0, 40, 0.4);
       border-bottom: 2px solid cyan;
     }
+
+    
 
     .logo {
       font-size: 24px;
@@ -136,59 +141,46 @@
     .logo.float-in {
       animation: floatIn 1.0s ease;
     }
-    .element{
-      font-size: 24px;
-      font-family: 'Orbitron', sans-serif;
-      color: black;
-      font-weight: 10px;
-      text-shadow: 0px 0px 10px cyan;
-    }
-    .dark.element:hover {
-      text-shadow: 0px 0px 20px cyan, 0px 0px 40px cyan;
-      transform: scale(1.1);
-    }
-    .dark.element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background: cyan;
-      transition: width 0.3s ease, left 0.3s ease;
+    
+  .element {
+    font-size: 18px;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    position: relative;
+    padding: 6px 10px;
   }
-  
-  .dark.element:hover::after {
-      width: 100%;
-      left: 0;
+
+  .element:hover {
+    transform: scale(1.1);
   }
-  
-    .dark .element{
-      color: cyan;
-      text-shadow: 0 0 10px cyan;
-      animation: neon-glow 1.5s infinite alternate;
-      border: none;
-      outline: none;
-    }
-    .element:hover {
-      text-shadow: 0px 0px 20px yellow, 0px 0px 40px yellow;
-      transform: scale(1.1);
-    }
-    .element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background:yellow;
-      transition: width 0.3s ease, left 0.3s ease;
+
+  .dark .element {
+    color: cyan;
+    text-shadow: 0 0 10px cyan;
   }
-  
-    .element:hover::after {
-      width: 100%;
-      left: 0;
+
+  .element::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    left: 50%;
+    bottom: -5px;
+    background: red;
+    transition: width 0.3s ease, left 0.3s ease;
   }
+
+  .element:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .dark .element::after {
+    background: cyan;
+  }
+
     .dark .element.float-in{
       animation: floatIn 1.0s ease;
     }
@@ -234,11 +226,12 @@
   <nav class="navbar">
     <p id="modes"></p>
     <div class="logo">Hackstreet Boys</div>
-    <a href="http://127.0.0.1:8000/" class="element">Home</a>
+    <a href="/" class="element">Home</a>
     <a href="about_us/" class="element">About us</a>
     <a href="chat/" class="element">Chatbot</a>
     <a href="projects/" class="element">Projects</a>
     <a href="contact_us/" class="element">Contact us</a>
+    <a href= "skills/" class="element">Skills</a>
 
     <div class="pos">
       <button id="themeToggle" class="toggle">
