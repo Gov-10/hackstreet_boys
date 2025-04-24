@@ -1,8 +1,10 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
   <title>About us page</title>
   <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+  <link rel="icon" href="{% static 'fav.jpg' %}" type="image/x-icon">
   <script defer src="https://pyscript.net/latest/pyscript.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
@@ -89,16 +91,22 @@
 
     .navbar {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       padding: 20px 40px;
-      background: #e0e0e0;
-      transition: background 0.4s;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       border-bottom: 2px solid #ccc;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
 
     .dark .navbar {
-      background: #131343;
+      background: rgba(0, 0, 40, 0.4);
       border-bottom: 2px solid cyan;
     }
 
@@ -108,17 +116,15 @@
       color: #000;
     }
 
-    @keyframes neon-glow {
-      0% { box-shadow: 0 0 10px cyan; }
-      100% { box-shadow: 0 0 30px cyan; }
-    }
-
     .dark .logo {
       color: cyan;
       text-shadow: 0 0 10px cyan;
       animation: neon-glow 1.5s infinite alternate;
-      border: none;
-      outline: none;
+    }
+
+    @keyframes neon-glow {
+      0% { box-shadow: 0 0 10px cyan; }
+      100% { box-shadow: 0 0 30px cyan; }
     }
 
     @keyframes floatIn {
@@ -135,62 +141,45 @@
     .logo.float-in {
       animation: floatIn 1.0s ease;
     }
-    .element{
-      font-size: 24px;
+    .element {
+      font-size: 18px;
       font-family: 'Orbitron', sans-serif;
-      color: black;
-      font-weight: 10px;
-      text-shadow: 0px 0px 10px cyan;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: 0.3s ease;
+      position: relative;
+      padding: 6px 10px;
     }
-    .dark.element:hover {
-      text-shadow: 0px 0px 20px cyan, 0px 0px 40px cyan;
+
+    .element:hover {
       transform: scale(1.1);
     }
-    .dark.element::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: -6px;
-      left: 50%;
-      background: cyan;
-      transition: width 0.3s ease, left 0.3s ease;
-  }
-  
-  .dark.element:hover::after {
-      width: 100%;
-      left: 0;
-  }
-  
-    .dark .element{
+
+    .dark .element {
       color: cyan;
       text-shadow: 0 0 10px cyan;
-      animation: neon-glow 1.5s infinite alternate;
-      border: none;
-      outline: none;
     }
-    .element:hover {
-      text-shadow: 0px 0px 20px yellow, 0px 0px 40px yellow;
-      transform: scale(1.1);
-    }
+
     .element::after {
       content: "";
       position: absolute;
       width: 0;
-      height: 3px;
-      bottom: -6px;
+      height: 2px;
       left: 50%;
-      background:yellow;
+      bottom: -5px;
+      background: red;
       transition: width 0.3s ease, left 0.3s ease;
-  }
-  
+    }
+
     .element:hover::after {
       width: 100%;
       left: 0;
-  }
-    .dark .element.float-in{
-      animation: floatIn 1.0s ease;
     }
+
+    .dark .element::after {
+      background: cyan;
+    }
+
   </style>
 </head>
 <body class="light">
