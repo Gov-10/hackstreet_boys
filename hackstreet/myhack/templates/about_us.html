@@ -2,10 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>About us page</title>
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-  <link rel="icon" href="{% static 'fav.jpg' %}" type="image/x-icon">
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  <title>Contact Us</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -104,7 +101,6 @@
       top: 0;
       z-index: 999;
     }
-
     .dark .navbar {
       background: rgba(0, 0, 40, 0.4);
       border-bottom: 2px solid cyan;
@@ -115,13 +111,11 @@
       font-family: 'Orbitron', sans-serif;
       color: #000;
     }
-
     .dark .logo {
       color: cyan;
       text-shadow: 0 0 10px cyan;
       animation: neon-glow 1.5s infinite alternate;
     }
-
     @keyframes neon-glow {
       0% { box-shadow: 0 0 10px cyan; }
       100% { box-shadow: 0 0 30px cyan; }
@@ -138,6 +132,9 @@
       }
     }
 
+    .logo.float-in {
+      animation: floatIn 1.0s ease;
+    }
     .logo.float-in {
       animation: floatIn 1.0s ease;
     }
@@ -179,19 +176,142 @@
     .dark .element::after {
       background: cyan;
     }
+    .dark .element.float-in{
+      animation: floatIn 1.0s ease;
+    }
+    .dark .element.float-in{
+      animation: floatIn 1.0s ease;
+    }
+    .chatbot-icon {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      cursor: pointer;
+      z-index: 1000;
+      text-align: center;
 
+    }
+    .robot {
+      width: 150px;
+      transition: transform 0.3s ease;
+      animation: wave-hand 2s infinite ease-in-out;
+      filter : drop-shadow(0 0 5px cyan) drop-shadow(0 0 10px cyan);
+    }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+    
+    /* Hand waving effect (simplified) */
+    @keyframes wave-hand {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(15deg); }
+      40% { transform: rotate(-10deg); }
+      60% { transform: rotate(15deg); }
+      80% { transform: rotate(-5deg); }
+    }
+    .chatbot-icon:hover .robot {
+      transform: scale(2.0);
+    }    
+    .img-container {
+      margin: 20px;
+      display: inline-block;
+    }
+    .govind_img{
+      width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px cyan;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+    }
+    .govind_img:hover{
+      box-shadow: 0 0 30px aqua, 0 0 50px lightblue;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .texty{
+      color: cyan;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 20px;
+    }
+    .modal-content {
+      margin: 10% auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      width: 200px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .modal-content img.qr-img {
+      width: 200px;
+      margin-top: 10px;
+    }
+    
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      color: red;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .cont{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 400px;
+      height: 400px;
+      padding: 40px;
+      margin-top: 55px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(0, 255, 255, 0.5); /* Soft cyan border */
+      background: rgba(255, 255, 255, 0.05); /* Frosted glass effect */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2),
+                  0 0 40px rgba(0, 255, 255, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #satwik{
+      position: relative;
+      bottom: 500px;
+      left: 500px;
+    }
+    #suryadeep{
+      position: relative;
+      bottom: 875px;
+      left: 1000px;
+    }
   </style>
+  <link rel="icon" href="{% static 'fav.jpg' %}" type="image/x-icon">
 </head>
 <body class="light">
   <nav class="navbar">
     <p id="modes"></p>
-    <div class="logo">HackstreetBoys</div>
+    <div class="logo">Hackstreet Boys</div>
     <a href="/" class="element">Home</a>
     <a href="/about_us/" class="element">About us</a>
     <a href="/chat/" class="element">Chatbot</a>
-    <a href = "/projects/" class="element">Projects</a>
+    <a href="/projects/" class="element">Projects</a>
     <a href = "/contact_us/" class="element">Contact us</a>
     <a href= "/skills/" class="element">Skills</a>
+    
     <div class="pos">
       <button id="themeToggle" class="toggle">
         <div class="rocket-wrapper">
@@ -201,36 +321,95 @@
       </button>
     </div>
   </nav>
-  <py-script>
-    
-    <py-script>
-  <script>
-    const btn = document.getElementById("themeToggle");
-    const logo = document.querySelector(".logo");
-    const rocket = document.getElementById("rocket");
+  {% comment %} govind {% endcomment %}
+  <div class ="cont">
+  <div class= "img-container">
+  <img src = "{%static 'govind_image.png'%}" alt="This is Govind" class = "govind_img" onclick="openPopup()"/>
+  <h3 class="texty">Govind S</h3>
+  <p class="texty">Hi, I am Govind. I am from Hyderabad, Telanagana, India. I am a first year student at IIIT Nagpur</p>
+  </div>
+</div>
 
-    function triggerFloatIn() {
-      logo.classList.remove("float-in");
-      void logo.offsetWidth;
-      logo.classList.add("float-in");
-    }
+   {% comment %} satwik {% endcomment %}
+  <div class ="cont" id="satwik">
+    <div class= "img-container">
+    <img src = "{%static 'satwik.png'%}" alt="This is Satwik" class = "govind_img" onclick="openPopupSatwik()"/>
+    <h3 class="texty">Satwik Chaudhary</h3>
+    <p class="texty">Hi, I am Satwik Chaudhary. I am from Varanasi, Uttar Pradesh, India. I am a first year student at IIIT Nagpur</p>
+    </div>
+  </div>
+  
+  {% comment %} suryadeep {% endcomment %}
+  <div class ="cont" id="suryadeep">
+    <div class= "img-container">
+    <img src = "{%static 'suryadeep.png'%}" alt="This is Suryadeep" class = "govind_img" onclick="openPopupSuryadeep()"/>
+    <h3 class="texty">Suryadeep</h3>
+    <p class="texty">Hi, I am Suryadeep. I am from Sonbhadra, Uttar Pradesh, India. I am a first year student at IIIT Nagpur</p>
+    </div>
+  </div>
+ 
 
-    btn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      document.body.classList.toggle("light");
+  <div class="chatbot-icon">
+    <a href="/chat/"><img src="{% static 'robo.webp' %}" alt="Chatbot" class="robot" /></a>
+  </div>
+<script>
+  const btn = document.getElementById("themeToggle");
+const logo = document.querySelector(".logo");
+const rocket = document.getElementById("rocket");
 
-      document.getElementById("modes").textContent =
-        document.body.classList.contains("dark") ? "dark mode" : "";
 
-      rocket.textContent = document.body.classList.contains("dark") ? "🌙" : "🚀";
+function triggerFloatIn() {
+  logo.classList.remove("float-in");
+  void logo.offsetWidth;
+  logo.classList.add("float-in");
+}
 
-      triggerFloatIn();
-    });
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  document.body.classList.toggle("light");
 
-    
-    window.addEventListener("DOMContentLoaded", () => {
-      triggerFloatIn();
-    });
-  </script>
+  document.getElementById("modes").textContent =
+    document.body.classList.contains("dark") ? "dark mode" : "";
+
+  rocket.textContent = document.body.classList.contains("dark") ? "🌙" : "🚀";
+
+  const isDarkMode = document.body.classList.contains("dark");
+  document.getElementById("spline-dark").style.display = isDarkMode ? "block" : "none";
+  document.getElementById("spline-light").style.display = isDarkMode ? "none" : "block";
+
+  triggerFloatIn();
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  triggerFloatIn();
+});
+</script>
+ 
+<script>
+  function openPopup() {
+    document.getElementById("qrModal").style.display = "block";
+  }
+
+  function closePopup() {
+    document.getElementById("qrModal").style.display = "none";
+  }
+
+  function openPopupSatwik() {
+    document.getElementById("qrModalSatwik").style.display = "block";
+  }
+
+  function closePopupSatwik() {
+    document.getElementById("qrModalSatwik").style.display = "none";
+  }
+
+  function openPopupSuryadeep() {
+    document.getElementById("qrModalSuryadeep").style.display = "block";
+  }
+
+  function closePopupSuryadeep() {
+    document.getElementById("qrModalSuryadeep").style.display = "none";
+  }
+</script>
+
 </body>
 </html>
