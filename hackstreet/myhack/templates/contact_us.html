@@ -232,8 +232,8 @@
       display: inline-block;
     }
     .govind_img{
-      width: 300px;
-  height: 300px;
+      width: 200px;
+  height: 200px;
   border-radius: 50%;
   box-shadow: 0 0 20px cyan;
   cursor: pointer;
@@ -264,7 +264,7 @@
       padding: 20px;
       background-color: white;
       border-radius: 10px;
-      width: 300px;
+      width: 200px;
       text-align: center;
       position: relative;
     }
@@ -286,9 +286,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 400px;
-      height: 400px;
-      padding: 20px;
+      width: 300px;
+      height: 300px;
+      padding: 40px;
       margin-top: 55px;
       border-radius: 20px;
       border: 1.5px solid rgba(0, 255, 255, 0.5); /* Soft cyan border */
@@ -297,6 +297,16 @@
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.2),
                   0 0 40px rgba(0, 255, 255, 0.15);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #satwik{
+      position: relative;
+      bottom: 435px;
+      left: 500px;
+    }
+    #suryadeep{
+      position: relative;
+      bottom: 875px;
+      left: 1000px;
     }
   </style>
 </head>
@@ -319,6 +329,7 @@
       </button>
     </div>
   </nav>
+  {% comment %} govind {% endcomment %}
   <div class ="cont">
   <div class= "img-container">
   <img src = "{%static 'govind_image.png'%}" alt="This is Govind" class = "govind_img" onclick="openPopup()"/>
@@ -326,7 +337,6 @@
   <p class="texty">Click on photo to contact me</p>
   </div>
 </div>
-
   <div id="qrModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closePopup()">&times;</span>
@@ -335,6 +345,42 @@
       <a href="mailto:govindsys1008@gmail.com">Or you can just click here</a>
     </div>
   </div>
+
+   {% comment %} satwik {% endcomment %}
+  <div class ="cont" id="satwik">
+    <div class= "img-container">
+    <img src = "{%static 'satwik.png'%}" alt="This is Satwik" class = "govind_img" onclick="openPopupSatwik()"/>
+    <h3 class="texty">Satwik Chaudhary</h3>
+    <p class="texty">Click on photo to contact me</p>
+    </div>
+  </div>
+  <div id="qrModalSatwik" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePopupSatwik()">&times;</span>
+      <h3>Scan to Email Satwik</h3>
+      <img src="{% static 'satwik_qr.png' %}" alt="QR Code" class="qr-img"><br>
+      <a href="mailto:satwik@example.com">Or you can just click here</a>
+    </div>
+  </div>
+  
+  {% comment %} suryadeep {% endcomment %}
+  <div class ="cont" id="suryadeep">
+    <div class= "img-container">
+    <img src = "{%static 'suryadeep.png'%}" alt="This is Suryadeep" class = "govind_img" onclick="openPopupSuryadeep()"/>
+    <h3 class="texty">Suryadeep</h3>
+    <p class="texty">Click on photo to contact me</p>
+    </div>
+  </div>
+  <div id="qrModalSuryadeep" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePopupSuryadeep()">&times;</span>
+      <h3>Scan to Email Suryadeep</h3>
+      <img src="{% static 'suryadeep_qr.png' %}" alt="QR Code" class="qr-img"><br>
+      <a href="mailto:suryadeepvaishya0@gmail.com">Or you can just click here</a>
+    </div>
+  </div>
+  
+
   <div class="chatbot-icon">
     <a href="/chat/"><img src="{% static 'robo.webp' %}" alt="Chatbot" class="robot" /></a>
   </div>
@@ -378,6 +424,22 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function closePopup() {
     document.getElementById("qrModal").style.display = "none";
+  }
+
+  function openPopupSatwik() {
+    document.getElementById("qrModalSatwik").style.display = "block";
+  }
+
+  function closePopupSatwik() {
+    document.getElementById("qrModalSatwik").style.display = "none";
+  }
+
+  function openPopupSuryadeep() {
+    document.getElementById("qrModalSuryadeep").style.display = "block";
+  }
+
+  function closePopupSuryadeep() {
+    document.getElementById("qrModalSuryadeep").style.display = "none";
   }
 </script>
 
